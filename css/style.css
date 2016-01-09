@@ -1,0 +1,50 @@
+/*顶部提示条*/
+.m-tips{width: 100%; height: 36px; background: #f3f3f3; line-height: 36px;}
+.m-tips p{display: block; width: 1200px; margin: 0 auto;}
+.m-tips a{color: #21a557;}
+.m-tips span{float: right;cursor: pointer;}
+.m-tips span:before{content: url(../imgs/close.png);}
+
+/*head*/
+.head{width: 1200px; height: 90px; line-height: 90px; margin: 0 auto; position: relative;}
+.head div,.head .nav ul li{float: left;}
+.head .logo .en-name{padding-right:10px; margin-right: 10px; font-weight: bold; color: #21a557; border-right: 1px solid #21a227;}
+.head .logo{font-size: 22px; margin: 0 30px 0 0;}
+.head .follow span{width: 52px; height: 21px; padding: 5px 8px; line-height: 12px; margin-right: 20px; background: #21a557; color: #fff; border-radius: 2px; cursor: pointer;}
+.head .nav{float: right; font-size: 16px; color: #666; margin-right: 60px;}
+.head .nav ul li{margin-left: 60px;}
+.head .search{position: absolute; right: 0; top: 50%; margin-top: -11px; width: 22px; height: 22px; float: right; background: url(../imgs/search.png);}
+.head .search:hover{background: url(../imgs/search-hover.png); cursor: pointer;}
+
+/*slide*/
+.slide{width: 1600px; overflow: hidden; margin: 0 auto; position: relative;}
+.slide .slide-warp{width:8000px;}
+.slide .slide-warp ul.slide-item li{float: left;}
+.slide .slide-indicators{position: absolute; bottom: 30px; left: 50%; margin-left: -39px;}
+.slide ul.slide-indicators li{float: left; width: 10px; height: 10px; background: #fff;margin-right: 16px;border-radius: 5px;} 
+.slide ul.slide-indicators li.active{background: #333;}
+
+/*products-list*/
+.products-list{width: 1200px;margin:0 auto; font-size: 14px; line-height: 24px;padding: 60px 0;}
+.products-list-content{float: left;margin-left: 60px; width:360px;}
+.products-list-content:first-child{margin-left: 0;}
+.products-list-content .openclass{width: 80px; height: 80px; background: url(../imgs/prod1.png);float: left;}
+.products-list-content .cloundclass{width: 80px; height: 80px; background: url(../imgs/prod2.png);float: left;}
+.products-list-content .mooc{width: 80px; height: 80px; background: url(../imgs/prod3.png);float: left;}
+.products-list-content h3{font-size: 22px;font-weight: normal;margin-bottom: 20px;}
+.products-list-content .intro{margin-left: 100px;}
+.products-list-content .intro a{color: #21a557;}
+.products-list-content .intro p{color: #666;margin-bottom: 20px;}
+.products-list-content .intro a:hover{text-decoration: underline;}
+
+
+/*图片行*/
+.images-display-area{width: 1650px;height: 228px;overflow: hidden; margin: 0 auto;}
+.images-display-area ul li{float: left;margin-right: 5px;}
+
+/*课程内容区*/
+.content{width: 1200px;margin: 60px auto;}
+.content-list{display: block;width: 400px;height: 50px;box-shadow: 0 1px 1px #999;font-size: 20px;line-height: 50px;}
+.content-list a{width: 200px; text-align: center;float: left;}
+.content-list a.active{background: #21a557;color: #fff;}
+
