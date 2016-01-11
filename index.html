@@ -12,10 +12,10 @@
 
 <body>
 	<!--顶部提示条-->
-	<div class="m-tips">
+	<div class="m-tips" id="tips">
 		<p>
 			网易云课堂微专业，帮助你掌握专业技能，令你求职或加薪多一份独特优势！&nbsp;&nbsp;<a href=""> 立即查看 ></a>
-			<span> 不再提醒</span>
+			<span id="notip"> 不再提醒</span>
 		</p>
 	</div>
 	
@@ -25,7 +25,7 @@
 			<span class="en-name">EDU</span>网易教育产品部
 		</div>
 		<div class="follow">
-			<span>+ 关注</span>粉丝 45
+			<span id="followbtn">+ 关注</span>粉丝 45
 		</div>
 		<i class="search"></i>
 		<div class="nav">
@@ -66,7 +66,7 @@
 				<div class="products-list-content">
 					<div class="cloundclass"></div>
 					<div class="intro">
-						<h3>网易云课堂</h3>
+						<h3>云课堂</h3>
 						<p>网易旗下大型在线学习平台，该平台面向学习者提供海量免费、优质课程,创新的个性化学习体验，自由开放的交流互动环境。</p>
 						<a href="http://study.163.com/">了解更多 ></a>
 					</div>
@@ -102,6 +102,20 @@
 			<div class="hot-list"></div>
 		</div>
 	</div>
+	<!-- 登陆表单 -->
+	<div id="login-warp" style="display:none">
+		<div class="login">
+			<i id="iconclose">X</i>
+			<h2>登陆网易云课堂</h2>
+			<form action="http://study.163.com /webDev/login.htm" method="get">
+				<input type="text" placeholder="账号" name="username">
+				<input type="text" placeholder="密码" name="password">
+				<div class="login-btn">登陆</div>
+			</form>
+		</div>
+	</div>
+		
+<script src="javascript/js.js" type="text/javascript"></script>
 </body>
 
 </html>
