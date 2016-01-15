@@ -8,6 +8,7 @@ function $(id) {
 	return document.getElementById(id);
 }
 
+
 //获取css
 function getStyle(ele, name) {
 	if (ele.currentStyle) {
@@ -102,6 +103,38 @@ function followclick() {
 
 
 $('followbtn').addEventListener('click', followclick, false);
-$('iconclose').addEventListener('click', function(){
-	$('login-warp').style.display='none';
-}, false)
+$('iconclose').onclick = function () {
+	$('login-warp').style.display = 'none';
+}
+
+//输入验证
+function inputchenk() {
+	//	var username = $()
+}
+
+//登陆函数
+//function loginsend(){
+//	var user = $('login-warp').getElementsByTagName('input')[0];
+//	var pass = $('login-warp').getElementsByTagName('input')[1];
+//	var send = {
+//		uesrName:md5(user.value()),
+//		passWord:md5(pass.value())
+//	}
+//	ajax("get","http://study.163.com /webDev/login.htm",)
+//}
+function Ajax() {
+	var xmlhttp;
+	if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp = new XMLHttpRequest();
+	} else { // code for IE6, IE5
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function () {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			console.log(xmlhttp.responseText);
+		}
+	}
+	xmlhttp.open("GET", "http://study.163.com /webDev/login.htm", true);
+	xmlhttp.send();
+}
+window.onload = Ajax;
