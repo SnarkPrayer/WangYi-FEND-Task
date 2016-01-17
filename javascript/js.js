@@ -199,3 +199,61 @@ function loginhide() {
 $('login-btn').addEventListener('click', login, false);
 $('followbtn').addEventListener('click', follow, false);
 $('iconclose').addEventListener('click', loginhide, false);
+
+
+//slide
+window.onload = function slide() {
+	var oBox = $("slide");
+	var aUl = oBox.getElementsByTagName("ul");
+	var aImg = aUl[0].getElementsByTagName("li");
+	var aNum = aUl[1].getElementsByTagName("li");
+	var timer = play = null;
+	var i = index = 0;
+	//切换按钮
+	for (i = 0; i < aNum.length; i++) {
+		aNum[i].index = i;
+		aNum[i].onmouseover = function () {
+			show(this.index)
+		}
+	}
+	//鼠标划过关闭定时器
+	oBox.onmouseover = function () {
+		clearInterval(play)
+	};
+
+	//鼠标离开启动自动播放
+	oBox.onmouseout = function () {
+		autoPlay()
+	};
+
+	//自动播放函数
+	function autoPlay() {
+		play = setInterval(function () {
+			index++;
+			if (index >= aImg.length) {
+				index = 0;
+			}
+			show(index);
+		}, 5000);
+	}
+	autoPlay(); //应用
+	//图片切换, 淡入淡出效果
+	function show(a) {
+		var index = a;
+		var alpha = 0;
+		for (var i = 0; i < aImg.length; i++) {
+			aImg[i].className = "";
+			aNum[i].className = "";
+		}
+		clearInterval(timer);
+		aImg[index].className = 'current';
+		aNum[index].className = 'current';
+		timer = setInterval(function () {
+			alpha += 2;
+			alpha > 100 && (alpha = 100);
+			aImg[index].style.opacity = alpha / 100;
+			aImg[index].style.filter = "alpha(opacity = " + alpha + ")";
+			alpha == 100 && clearInterval(timer)
+		}, 10)
+	}
+}

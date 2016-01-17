@@ -11,18 +11,22 @@
 .head .logo .en-name{padding-right:10px; margin-right: 10px; font-weight: bold; color: #21a557; border-right: 1px solid #21a227;}
 .head .logo{font-size: 22px; margin: 0 30px 0 0;}
 .head .follow span{width: 52px; height: 21px; padding: 5px 8px; line-height: 12px; margin-right: 20px; background: #21a557; color: #fff; border-radius: 2px; cursor: pointer;}
+.head #unfollowbtn{background: #f8f8f8;border: 1px solid #efefef;color: #333;}
+.head #unfollowbtn i{color: #999;cursor: pointer;}
+.head #unfollowbtn i:hover{color: #21a557;text-decoration: underline;}
 .head .nav{float: right; font-size: 16px; color: #666; margin-right: 60px;}
 .head .nav ul li{margin-left: 60px;}
 .head .search{position: absolute; right: 0; top: 50%; margin-top: -11px; width: 22px; height: 22px; float: right; background: url(../imgs/search.png);}
 .head .search:hover{background: url(../imgs/search-hover.png); cursor: pointer;}
 
 /*slide*/
-.slide{width: 1600px; overflow: hidden; margin: 0 auto; position: relative;}
-.slide .slide-warp{width:8000px;}
-.slide .slide-warp ul.slide-item li{float: left;}
-.slide .slide-indicators{position: absolute; bottom: 30px; left: 50%; margin-left: -39px;}
-.slide ul.slide-indicators li{float: left; width: 10px; height: 10px; background: #fff;margin-right: 16px;border-radius: 5px;} 
-.slide ul.slide-indicators li.active{background: #333;}
+#slide{width: 1600px;height: 460px; overflow: hidden; margin: 0 auto; position: relative;}
+#slide ul.slide-item{position:relative;overflow:hidden;width: 1600px;height: 460px;}
+#slide ul.slide-item li{position: absolute;top: 0;left: 0;display: none;}
+#slide ul.slide-item li.current{display: block;}
+#slide .slide-indicators{position: absolute; bottom: 30px; left: 50%; margin-left: -39px;}
+#slide ul.slide-indicators li{float: left; width: 10px; height: 10px; background: #fff;margin-right: 16px;border-radius: 5px;cursor: pointer;} 
+#slide ul.slide-indicators li.current{background: #333;}
 
 /*products-list*/
 .products-list{width: 1200px;margin:0 auto; font-size: 14px; line-height: 24px;padding: 60px 0;}
@@ -48,3 +52,10 @@
 .content-list a{width: 200px; text-align: center;float: left;}
 .content-list a.active{background: #21a557;color: #fff;}
 
+/*登陆*/
+#login-warp{position: fixed; top: 0;left: 0; width: 100%;height: 100%;background: rgba(0,0,0,0.8);}
+.login{position: fixed;top: 50%;left: 50%;margin: -150px 0 0 -200px; width: 400px;height: 300px;background: #fff;padding: 0 40px;box-sizing: border-box;}
+#iconclose{position: absolute;top: 12px; right: 12px;font-size: 16px;cursor: pointer;}
+.login h2{font-size: 18px;margin: 40px 0 20px 0;}
+.login input{margin-bottom: 20px;width: 300px;height: 45px;border: 1px solid #e4e4e4;border-radius: 4px;padding-left: 10px;}
+#login-btn{width: 310px; height: 45px;text-align: center;line-height: 45px;color: #fff;background: #21a557;border-radius: 4px;box-shadow: 1px 1px 2px #848484;font-size: 16px;cursor: pointer;}
