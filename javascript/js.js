@@ -8,28 +8,24 @@ function $(id) {
 	return document.getElementById(id);
 }
 
-
-//获取css
-function getStyle(ele, name) {
-	if (ele.currentStyle) {
-		// IE下的处理
-		return ele.currentStyle[name];
-	} else {
-		// 标准浏览器处理
-		return getComputedStyle(ele, false)[name];
-	}
-}
-
-/**
- *  显示隐藏函数,如果是显示就隐藏,是隐藏就显示
- * @param {object} obj 需要在点击或hover后实现点击显示隐藏.的对象
+/**通过class类名来选取元素
+ * @param   {Object} parent 父级对象,
+ * @param   {String} sClass className类名
+ * @returns {Array}  获取到的节点数组
  */
-function showHide(obj) {
-	var objDisplay = getStyle(obj, "display");
-	if (objDisplay == "none") {
-		obj.style.display = "block";
+function getByClassName(parent, sClass) {
+	if (parent.getElementsByClassName) {
+		return parent.getElementsByClassName(sClass);
 	} else {
-		obj.style.display = "none";
+		var oEle = parent.getElementsByTagName("*"),
+			arr = [],
+			reg = new RegExp("\\b" + sClass + "\\b");
+		for (var i = 0, len = oEle.length; i < len; i++) {
+			if (reg.test(oEle[i].className)) {
+				arr.push(oEle[i]);
+			}
+		}
+		return arr;
 	}
 }
 
@@ -65,6 +61,65 @@ function getCookie(name) {
 }
 
 
+/**
+ * Ajax函数
+ * @param {Type} type get por post
+ * @param {Type} url 请求地址
+ * @param {Type} data 数据
+ * @param {Type} success 请求成功执行函数
+ * @param {Type} faild 请求失败执行函数
+ */
+function Ajax(type, url, data, success, failed) {
+	// 1.创建ajax对象
+	var xhr = null;
+	if (window.XMLHttpRequest) {
+		xhr = new XMLHttpRequest();
+	} else {
+		//兼容ie6
+		xhr = new ActiveXObject('Microsoft.XMLHTTP');
+	}
+
+	var type = type.toUpperCase();
+	// 用于清除缓存
+	var random = Math.random();
+
+	if (typeof data == 'object') {
+		var str = '';
+		for (var key in data) {
+			str += key + '=' + data[key] + '&';
+		}
+		data = str.replace(/&$/, '');
+	}
+	//2.拼接传入的json,链接服务器
+	if (type == 'GET') {
+		if (data) {
+			xhr.open('GET', url + '?' + data, true);
+		} else {
+			xhr.open('GET', url + '?t=' + random, true);
+		}
+		//3.发送请求
+		xhr.send();
+	} else if (type == 'POST') {
+		xhr.open('POST', url, true);
+		// 如果需要像 html 表单那样 POST 数据，请使用 setRequestHeader() 来添加 http 头。
+		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhr.send(data);
+	}
+
+	// 4.处理返回数据
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState == 4) {
+			if (xhr.status == 200) {
+				success(xhr.responseText);
+			} else {
+				if (failed) {
+					failed(xhr.status);
+				}
+			}
+		}
+	};
+}
+
 //页面逻辑
 /**
  * 顶部提示条关闭
@@ -78,63 +133,69 @@ function tiphidden() {
 $('tips').addEventListener('click', tiphidden, false);
 
 //检测cookie
-
 function cookiecheck() {
 	if (getCookie('tip')) {
 		$('tips').style.display = 'none';
 	} else {
 		setCookie("tip", "false", 30);
 	}
-}
-cookiecheck();
-
-//登陆
-function followclick() {
 	if (getCookie('loginSuc')) {
-		//			得到cookie，改变样式
-		//			followstyle();
-		//			从服务器得到数据，添加关注
-		//			followcookie();
-	} else {
-		//显示登陆层
-		showHide($('login-warp'));
+		loginSuccess();
 	}
 }
-
-
-$('followbtn').addEventListener('click', followclick, false);
-$('iconclose').onclick = function () {
-	$('login-warp').style.display = 'none';
-}
+cookiecheck();
 
 //输入验证
 function inputchenk() {
 	//	var username = $()
 }
 
-//登陆函数
-//function loginsend(){
-//	var user = $('login-warp').getElementsByTagName('input')[0];
-//	var pass = $('login-warp').getElementsByTagName('input')[1];
-//	var send = {
-//		uesrName:md5(user.value()),
-//		passWord:md5(pass.value())
-//	}
-//	ajax("get","http://study.163.com /webDev/login.htm",)
-//}
-function Ajax() {
-	var xmlhttp;
-	if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp = new XMLHttpRequest();
-	} else { // code for IE6, IE5
-		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+//关注与登陆函数
+
+function follow() {
+	//判断是否已登陆
+	if (getCookie('loginSuc') === 'true') {
+		followshow(); //更改关注样式
+	} else {
+		//显示登陆层
+		loginshow();
 	}
-	xmlhttp.onreadystatechange = function () {
-		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			console.log(xmlhttp.responseText);
-		}
-	}
-	xmlhttp.open("GET", "http://study.163.com /webDev/login.htm", true);
-	xmlhttp.send();
 }
-window.onload = Ajax;
+//登陆函数
+function login() {
+	var user = $('username');
+	var pass = $('password')
+
+	var send = {
+		userName: md5(user.value),
+		password: md5(pass.value)
+	};
+	//提交
+	Ajax("GET", "http://study.163.com/webDev/login.htm", send, loginSuccess, function (error) {
+		console.log("服务器响应失败,错误号:" + error);
+	});
+}
+
+function loginSuccess() {
+	//设置登录cookie
+	setCookie('loginSuc', 'true', 30);
+	//更改关注样式
+	$('followbtn').style.display = 'none';
+	$('unfollowbtn').style.display = 'inline';
+	//登陆层消失
+	loginhide();
+}
+
+//登陆层显示
+function loginshow() {
+	$('login-warp').style.display = 'block';
+}
+
+//登录层消失
+function loginhide() {
+	$('login-warp').style.display = 'none';
+}
+
+$('login-btn').addEventListener('click', login, false);
+$('followbtn').addEventListener('click', follow, false);
+$('iconclose').addEventListener('click', loginhide, false);
