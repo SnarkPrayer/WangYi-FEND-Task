@@ -257,3 +257,62 @@ window.onload = function slide() {
 		}, 10)
 	}
 }
+
+//课程列表
+
+function course() {
+	var pageNumber = 1;
+	var psizeNumber = 20;
+	var typeNumber = 10;
+
+	var senddata = {
+		"pageNo": pageNumber,
+		"psize": psizeNumber,
+		"type": typeNumber
+	}
+
+	Ajax("get", "http://study.163.com/webDev/couresByCategory.htm", senddata,
+		function (str) {
+			//成功时，创建html
+			var arr = JSON.parse(str);
+		console.log(arr);
+			for (var i = 0; i < arr.list.length; i++) {
+				var coursebox = document.createElement('div');
+				coursebox.className = "course";
+
+				var img = document.createElement('img');
+				img.setAttribute('src', arr.list[i].middlePhotoUrl)
+
+				var name = document.createElement('span')
+				name.className = "name";
+				name.innerHTML = arr.list[i].name
+
+				var provider = document.createElement('span')
+				provider.className = "provider";
+				provider.innerHTML = arr.list[i].provider;
+
+				var learnerCount = document.createElement('span')
+				learnerCount.className = "learnerCount";
+				learnerCount.innerHTML = "<img src=" + "imgs/learnerCount.png" + " >" + arr.list[i].learnerCount;
+
+				var price = document.createElement('span')
+				price.className = "price";
+				price.innerHTML = "￥" + arr.list[i].price;
+
+				var contentlist = $('courselist');
+
+				var coursefa = contentlist.appendChild(coursebox);
+				coursefa.appendChild(img);
+				coursefa.appendChild(name);
+				coursefa.appendChild(provider);
+				coursefa.appendChild(learnerCount);
+				coursefa.appendChild(price);
+
+				if (price.innerHTML == "￥0") {
+					price.innerHTML = "免费";
+				}
+			}
+		}
+	)
+}
+course();
