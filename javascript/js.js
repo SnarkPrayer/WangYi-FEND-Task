@@ -275,7 +275,6 @@ function course() {
 		function (str) {
 			//成功时，创建html
 			var arr = JSON.parse(str);
-		console.log(arr);
 			for (var i = 0; i < arr.list.length; i++) {
 				var coursebox = document.createElement('div');
 				coursebox.className = "course";
@@ -316,3 +315,32 @@ function course() {
 	)
 }
 course();
+
+function courselist() {
+	var hotlist = $('hotlist');
+
+	Ajax("get", "http://study.163.com/webDev/hotcouresByCategory.htm", {}, function (str) {
+		var arr = JSON.parse(str);
+		for (var i = 0; i < 10; i++) {
+			var warp = document.createElement('div');
+			warp.className = "hotlistwarp";
+
+			var img = document.createElement('img');
+			img.setAttribute('src', arr[i].smallPhotoUrl);
+
+			var title = document.createElement('span');
+			title.className = "listname";
+			title.innerHTML = arr[i].name;
+
+			var learner = document.createElement('span');
+			learner.className = "listlearner";
+			learner.innerHTML = "<img src=" + "imgs/learnerCount.png" + " >" + arr[i].learnerCount;
+
+			hotlist.appendChild(warp);
+			warp.appendChild(img);
+			warp.appendChild(title);
+			warp.appendChild(learner);
+		}
+	})
+}
+courselist();
