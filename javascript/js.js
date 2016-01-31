@@ -39,6 +39,7 @@ function setCookie(name, value, end) {
 	var exdate = new Date();
 	exdate.setDate(exdate.getDay() + end);
 	document.cookie = name + "=" + value + ";expires=" + exdate;
+	console.log(name);
 }
 
 /**
@@ -128,6 +129,7 @@ function Ajax(type, url, data, success, failed) {
 function tiphidden() {
 	this.style.display = 'none';
 	setCookie("tip", "false", 30);
+	
 }
 
 $('tips').addEventListener('click', tiphidden, false);
@@ -155,7 +157,13 @@ function inputchenk() {
 function follow() {
 	//判断是否已登陆
 	if (getCookie('loginSuc') === 'true') {
-		followshow(); //更改关注样式
+		setCookie('follow', 'true', 30);
+		//更改关注样式
+		Ajax('get', 'http://study.163.com/webDev/attention.htm', {}, function(data){
+			if(data == "1"){
+				loginSuccess();
+			}
+		})
 	} else {
 		//显示登陆层
 		loginshow();
@@ -201,6 +209,17 @@ $('followbtn').addEventListener('click', follow, false);
 $('iconclose').addEventListener('click', loginhide, false);
 
 
+//取消关注
+
+function unfollow() {
+	//设置登录cookie
+	setCookie('follow', 'false', 30);
+	//更改关注样式
+	$('followbtn').style.display = 'inline';
+	$('unfollowbtn').style.display = 'none';
+}
+
+$('unfollowbtn').addEventListener('click',unfollow,false);
 //slide
 window.onload = function slide() {
 	var oBox = $("slide");
