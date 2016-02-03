@@ -7,28 +7,6 @@
 function $(id) {
 	return document.getElementById(id);
 }
-
-/**通过class类名来选取元素
- * @param   {Object} parent 父级对象,
- * @param   {String} sClass className类名
- * @returns {Array}  获取到的节点数组
- */
-function getByClassName(parent, sClass) {
-	if (parent.getElementsByClassName) {
-		return parent.getElementsByClassName(sClass);
-	} else {
-		var oEle = parent.getElementsByTagName("*"),
-			arr = [],
-			reg = new RegExp("\\b" + sClass + "\\b");
-		for (var i = 0, len = oEle.length; i < len; i++) {
-			if (reg.test(oEle[i].className)) {
-				arr.push(oEle[i]);
-			}
-		}
-		return arr;
-	}
-}
-
 /**
  * 设置cookie
  * @param {string} name cookie名
@@ -39,7 +17,6 @@ function setCookie(name, value, end) {
 	var exdate = new Date();
 	exdate.setDate(exdate.getDay() + end);
 	document.cookie = name + "=" + value + ";expires=" + exdate;
-	console.log(name);
 }
 
 /**
@@ -129,7 +106,7 @@ function Ajax(type, url, data, success, failed) {
 function tiphidden() {
 	this.style.display = 'none';
 	setCookie("tip", "false", 30);
-	
+
 }
 
 $('tips').addEventListener('click', tiphidden, false);
@@ -159,8 +136,8 @@ function follow() {
 	if (getCookie('loginSuc') === 'true') {
 		setCookie('follow', 'true', 30);
 		//更改关注样式
-		Ajax('get', 'http://study.163.com/webDev/attention.htm', {}, function(data){
-			if(data == "1"){
+		Ajax('get', 'http://study.163.com/webDev/attention.htm', {}, function (data) {
+			if (data == "1") {
 				loginSuccess();
 			}
 		})
@@ -219,7 +196,7 @@ function unfollow() {
 	$('unfollowbtn').style.display = 'none';
 }
 
-$('unfollowbtn').addEventListener('click',unfollow,false);
+$('unfollowbtn').addEventListener('click', unfollow, false);
 //slide
 window.onload = function slide() {
 	var oBox = $("slide");
@@ -278,12 +255,17 @@ window.onload = function slide() {
 }
 
 //课程列表
+/**
+ * 
+ * @param {Type} pag 当前页码
+ * @param {Type} psi 数据个数
+ * @param {Type} type 筛选类型
+ */
+var pageNumber = 1;
+var psizeNumber = 20;
+var typeNumber = 10;
 
 function course() {
-	var pageNumber = 1;
-	var psizeNumber = 20;
-	var typeNumber = 10;
-
 	var senddata = {
 		"pageNo": pageNumber,
 		"psize": psizeNumber,
@@ -294,6 +276,8 @@ function course() {
 		function (str) {
 			//成功时，创建html
 			var arr = JSON.parse(str);
+			var contentlist = $('courselist');
+			contentlist.innerHTML = "";
 			for (var i = 0; i < arr.list.length; i++) {
 				var coursebox = document.createElement('div');
 				coursebox.className = "course";
@@ -317,7 +301,6 @@ function course() {
 				price.className = "price";
 				price.innerHTML = "￥" + arr.list[i].price;
 
-				var contentlist = $('courselist');
 
 				var coursefa = contentlist.appendChild(coursebox);
 				coursefa.appendChild(img);
@@ -334,6 +317,53 @@ function course() {
 	)
 }
 course();
+//课程切换
+var classification = $('courseclass').getElementsByTagName('a');
+
+function coursechange() {
+	typeNumber = (typeNumber == 10) ? 20 : 10;
+	for (var i = 0; i < classification.length; i++) {
+		classification[i].className = "";
+	}
+	this.className = "active";
+	pageNumber = 1;
+	course();
+}
+
+classification[1].addEventListener('click', coursechange, false);
+classification[0].addEventListener('click', coursechange, false);
+
+//上一页
+function pagepre() {
+	if (pageNumber == 1) {
+		return false;
+	} else {
+		pageNumber--;
+	}
+	var pagelist = $('pagelist').getElementsByTagName('li')
+	for (var i = 0; i < pagelist.length; i++) {
+		pagelist[i].className = "";
+	}
+	pagelist[pageNumber - 1].className = "active";
+	course();
+}
+$('pre').addEventListener('click', pagepre, false);
+
+//下一页
+function pagenext() {
+	if (pageNumber == 8) {
+		return false;
+	} else {
+		pageNumber++;
+	}
+	var pagelist = $('pagelist').getElementsByTagName('li')
+	for (var i = 0; i < pagelist.length; i++) {
+		pagelist[i].className = "";
+	}
+	pagelist[pageNumber - 1].className = "active";
+	course();
+}
+$('next').addEventListener('click', pagenext, false);
 
 function courselist() {
 	var hotlist = $('hotlist');
