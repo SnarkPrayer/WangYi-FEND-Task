@@ -365,6 +365,22 @@ function pagenext() {
 }
 $('next').addEventListener('click', pagenext, false);
 
+//分页
+$('pagelist').addEventListener('click', function(e) {
+    // e.target是被点击的元素!
+	// 如果被点击的是li元素
+	if(e.target && e.target.nodeName == "LI") {
+        pageNumber = parseInt(e.target.innerHTML);
+        course();
+	}
+    var pli = $('pagelist').getElementsByTagName('li')
+    for(var i=0;i<pli.length;i++){
+        pli[i].className = "";
+    }
+    e.target.className = "active";
+}, false);
+
+
 function courselist() {
 	var hotlist = $('hotlist');
 

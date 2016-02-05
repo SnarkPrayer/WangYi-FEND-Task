@@ -66,11 +66,11 @@
 .course .learnerCount img{width: 16px;height: 16px;vertical-align: text-top;}
 .course .price{color: #fc0000;font-weight: bold;}
 
-.page{position: absolute;bottom: 0;right: 0;width: 320px;height: 20px;line-height: 20px;margin-top: 20px;}
+.page{float: right; width: 320px;height: 20px;line-height: 20px;text-align: center;cursor: pointer;}
 .page ul li{display: block; float: left;width:20px;height: 20px;margin-right: 10px;cursor: pointer;text-align: center;}
-.page ul li:hover{color: #21a557;}
+.page ul li:hover{background: #9dd8b1;color: #fff;}
 .page ul li.active{background: #9dd8b1;color: #fff;}
-.page .pagebutton{width: 30px;height: 20px;background: #9dd8b1;color: #fff;}
+.page .pagebutton{float: left; width: 30px;height: 20px;margin-right: 10px; background: #9dd8b1;color: #fff;}
 
 .hot-list{float: right;width: 220px;height: auto;overflow: hidden;}
 .hot-list .video{height: 229px;width: 100%;background: #fff;margin-bottom: 20px;}
@@ -92,7 +92,7 @@
 .footer-logo span{color:#21a557;font-size: 22px;margin-bottom: 30px;display: block;}
 .footer-logo  span i{font-weight: bolder;}
 .f-warp{float: left;}
-.f-warp ul{display: block;float: left;font-size: 14px;margin-right: 100px;}
+.f-warp ul{display: block;float: left;font-size: 14px;margin-right: 100px;cursor: pointer;}
 .f-warp ul li:first-child{font-size: 12px;pointer-events: none;}
 .f-warp ul li{line-height: 30px;}
 .f-warp ul li:hover{text-decoration: underline;}
